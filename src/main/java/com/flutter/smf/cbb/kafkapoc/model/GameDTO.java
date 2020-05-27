@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 @RequiredArgsConstructor
-public class Game {
+public class GameDTO {
     private String id;
     private String competition_id;
     private Date start_time;

@@ -18,7 +18,7 @@ public class GameScheduledConsumer implements AcknowledgingMessageListener<Strin
     private GameScheduledService gameScheduledService;
 
     @Override
-    @KafkaListener(topics = {"cbb-game-events"})
+    @KafkaListener(topics = {"cbb.gameui.events"})
     public void onMessage(ConsumerRecord<String, Game> consumerRecord, Acknowledgment acknowledgment) {
         log.info("ConsumerRecord : {} ", consumerRecord);
         gameScheduledService.processgameShcedule(consumerRecord);

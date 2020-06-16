@@ -1,21 +1,23 @@
 spring:
-  profiles:
-    active: local
-server:
-  port: 8081
-
----
-spring:
-  profiles: local
   kafka:
     template:
-      default-topic: cbb-game-events
+      default-topic: cbb.gameui.events
     consumer:
-      group-id: backend-listener-group
+      group-id: smf-se-cbb-game
       max-poll-records: 20
-      bootstrap-servers: localhost:9092,localhost:9093,localhost:9094
+      bootstrap-servers: 10.133.176.241:9092,10.133.179.11:9092,10.133.180.239:9092
       key-deserializer: "org.apache.kafka.common.serialization.StringDeserializer"
       value-deserializer: "org.springframework.kafka.support.serializer.ErrorHandlingDeserializer2"
       properties:
         "spring.deserializer.value.delegate.class": "com.flutter.streaming.kafka.serializer.protobuf.ProtobufDeserializer"
         "protobuf.use.type.headers": true
+        "ssl.endpoint.identification.algorithm":
+        "security.protocol": SSL
+        "max.poll.interval.ms": 300000
+    ssl:
+      key-store-location: file:/opt/ssl/keystore.jks
+      key-store-password: ${kafka.jks.password:test123}
+      key-password: ${kafka.jks.password:test123}
+      trust-store-location: file:/opt/ssl/truststore.jks
+      trust-store-password: ${kafka.jks.password:test123}
+      protocol: SSL
